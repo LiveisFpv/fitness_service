@@ -2,10 +2,11 @@ package postgresql
 
 import (
 	"context"
-	"country_service/internal/domain/models"
+	"fitness_service/internal/domain/models"
 	"fmt"
 )
 
+// TODO sql
 func (r *Queries) CreateCountry(ctx context.Context, country_title, country_capital, country_area string) (country *models.Country, err error) {
 	sqlStatement := `INSERT INTO country (country_title, country_capital, country_area) VALUES ($1, $2, $3) RETURNING country_id`
 

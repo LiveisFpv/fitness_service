@@ -14,7 +14,7 @@ func (s *serverAPI) GetProfile(ctx context.Context, req *fitness_v1.ProfileReque
 		return nil, status.Error(codes.InvalidArgument, "user_id is required")
 	}
 
-	//Send request to Service
+	//TODO Send request to Service
 	fitness, err := s.fitness.Get_Profile(ctx, int(req.UserId))
 	if err != nil {
 		return nil, status.Error(codes.NotFound, fmt.Sprint(err))
@@ -22,8 +22,10 @@ func (s *serverAPI) GetProfile(ctx context.Context, req *fitness_v1.ProfileReque
 	return &fitness_v1.ProfileResponse{}, nil
 }
 func (s *serverAPI) CreateProfile(ctx context.Context, req *fitness_v1.CreateProfileRequest) (*fitness_v1.ProfileResponse, error) {
-
+	//TODO
+	return &fitness_v1.ProfileResponse{}, nil
 }
 func (s *serverAPI) UpdateProfile(ctx context.Context, req *fitness_v1.UpdateProfileRequest) (*fitness_v1.ProfileResponse, error) {
-
+	//TODO
+	return &fitness_v1.ProfileResponse{}, nil
 }
