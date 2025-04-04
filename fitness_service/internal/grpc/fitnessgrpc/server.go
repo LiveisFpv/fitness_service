@@ -10,12 +10,16 @@ import (
 
 type serverAPI struct {
 	fitness_v1.UnimplementedFitnessServer
+<<<<<<< HEAD
 	country Country
 	profile Profile
+=======
+	user User
+>>>>>>> origin/main
 }
 
 // Methods needed for handlers on Service
-type Country interface {
+type User interface {
 	GetProfile(
 		ctx context.Context,
 		user_id int,
@@ -78,6 +82,6 @@ type Profile interface {
 }
 
 // It how constructor but not constructor:В
-func Register(gRPCServer *grpc.Server, country Country) {
-	country_v1.RegisterCountryServer(gRPCServer, &serverAPI{country: country})
+func Register(gRPCServer *grpc.Server, user User) {
+	fitness_v1.RegisterFitnessServer(gRPCServer, &serverAPI{user: user})
 }

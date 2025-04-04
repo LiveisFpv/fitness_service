@@ -22,7 +22,7 @@ type App struct {
 
 // TODO create logger
 // App constructor with logger and Service
-func New(log *logrus.Logger, country_Service Country, port int) *App {
+func New(log *logrus.Logger, user_Service User, port int) *App {
 
 	recoverOpts := []recovery.Option{
 		recovery.WithRecoveryHandler(
@@ -47,7 +47,7 @@ func New(log *logrus.Logger, country_Service Country, port int) *App {
 	))
 
 	//Тута и мне осознать надо
-	Register(gRPCServer, country_Service)
+	Register(gRPCServer, user_Service)
 
 	return &App{
 		log:        log,

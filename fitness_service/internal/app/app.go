@@ -29,8 +29,8 @@ func New(
 	}
 
 	//Todo service
-	fitnessService := fitness.New(log, storage, tokenTTL)
-	grpcApp := fitnessgrpc.New(log, fitnessService, grpcPort)
+	userService := fitness.New(log, storage, tokenTTL)
+	grpcApp := fitnessgrpc.New(log, userService, grpcPort)
 
 	return &App{
 		GRPCServer: grpcApp,

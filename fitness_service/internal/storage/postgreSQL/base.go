@@ -2,7 +2,7 @@ package postgresql
 
 import (
 	"context"
-	"country_service/internal/domain/models"
+	"fitness_service/internal/domain/models"
 	"fmt"
 )
 
