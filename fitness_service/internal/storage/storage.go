@@ -30,22 +30,22 @@ func NewRepository(
 
 // Func for work with DB
 type Repository interface {
-	GetProfile(
+	GetUser(
 		ctx context.Context,
 		user_id int) (
-		*models.Profile,
+		*models.User,
 		error,
 	)
-	UpdateProfile(
+	UpdateUser(
 		ctx context.Context,
-		profile *models.Profile) (
-		*models.Profile,
+		user *models.User) (
+		*models.User,
 		error,
 	)
-	CreateProfile(
+	CreateUser(
 		ctx context.Context,
-		profile *models.Profile) (
-		*models.Profile,
+		user *models.User) (
+		*models.User,
 		error,
 	)
 	Stop()

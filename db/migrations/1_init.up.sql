@@ -6,6 +6,9 @@ CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE TABLE IF NOT EXISTS users
 (
     user_id bigint NOT NULL,
+    user_firstName text NOT NULL,
+    user_lastName text NOT NULL,
+    user_middleName text NOT NULL,
     user_birthday DATE NOT NULL,
     user_height integer NOT NULL,
     user_weight double precision NOT NULL,

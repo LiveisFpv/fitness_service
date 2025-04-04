@@ -10,31 +10,26 @@ import (
 
 type serverAPI struct {
 	fitness_v1.UnimplementedFitnessServer
-<<<<<<< HEAD
-	country Country
-	profile Profile
-=======
-	user User
->>>>>>> origin/main
+	user UserRepository
 }
 
 // Methods needed for handlers on Service
-type User interface {
-	GetProfile(
+type UserRepository interface {
+	GetUser(
 		ctx context.Context,
 		user_id int,
 	) (
-		*models.Profile,
+		*models.User,
 		error,
 	)
-	CreateProfile(
+	CreateUser(
 		ctx context.Context,
-		profile *models.Profile,
+		profile *models.User,
 	) (
-		*models.Profile,
+		*models.User,
 		error,
 	)
-	UpdateProfile(
+	UpdateUser(
 		ctx context.Context,
 		user_birthday *string,
 		user_height *int,
@@ -45,43 +40,14 @@ type User interface {
 		user_diabet *bool,
 		user_level *int,
 	) (
-		profile *models.Profile,
+		profile *models.User,
 		err error,
 	)
 }
 
-type Profile interface {
-	GetProfile(
-		ctx context.Context,
-		user_id int,
-	) (
-		*models.Profile,
-		error,
-	)
-	CreateProfile(
-		ctx context.Context,
-		profile *models.Profile,
-	) (
-		*models.Profile,
-		error,
-	)
-	UpdateProfile(
-		ctx context.Context,
-		user_birthday *string,
-		user_height *int,
-		user_weight *float64,
-		user_fitness_target *string,
-		user_sex *bool,
-		user_hypertain *bool,
-		user_diabet *bool,
-		user_level *int,
-	) (
-		profile *models.Profile,
-		err error,
-	)
-}
+
 
 // It how constructor but not constructor:В
-func Register(gRPCServer *grpc.Server, user User) {
+func Register(gRPCServer *grpc.Server, user UserRepository) {
 	fitness_v1.RegisterFitnessServer(gRPCServer, &serverAPI{user: user})
 }
