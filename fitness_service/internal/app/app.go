@@ -2,16 +2,16 @@ package app
 
 import (
 	"context"
-	"country_service/internal/grpc/countrygrpc"
-	"country_service/internal/services/country"
-	"country_service/internal/storage"
+	"fitness_service/internal/grpc/fitnessgrpc"
+	"fitness_service/internal/services/fitness"
+	"fitness_service/internal/storage"
 	"time"
 
 	"github.com/sirupsen/logrus"
 )
 
 type App struct {
-	GRPCServer *countrygrpc.App
+	GRPCServer *fitnessgrpc.App
 	Storage    storage.Repository
 }
 
@@ -29,8 +29,8 @@ func New(
 	}
 
 	//Todo service
-	countryService := country.New(log, storage, tokenTTL)
-	grpcApp := countrygrpc.New(log, countryService, grpcPort)
+	fitnessService := fitness.New(log, storage, tokenTTL)
+	grpcApp := fitnessgrpc.New(log, fitnessService, grpcPort)
 
 	return &App{
 		GRPCServer: grpcApp,

@@ -2,8 +2,8 @@ package storage
 
 import (
 	"context"
-	"country_service/internal/domain/models"
-	postgresql "country_service/internal/storage/postgreSQL"
+	"fitness_service/internal/domain/models"
+	postgresql "fitness_service/internal/storage/postgreSQL"
 	"fmt"
 
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -30,11 +30,24 @@ func NewRepository(
 
 // Func for work with DB
 type Repository interface {
-	GetCountrybyID(ctx context.Context, country_id int) (country *models.Country, err error)
-	GetAllCountry(ctx context.Context, pagination *models.Pagination, filter []*models.Filter, orderby []*models.Sort) ([]*models.Country, *models.Pagination, error)
-	CreateCountry(ctx context.Context, country_title, country_capital, country_area string) (country *models.Country, err error)
-	UpdateCountrybyID(ctx context.Context, country *models.Country) (err error)
-	DeleteCountrybyID(ctx context.Context, country_id int) (country *models.Country, err error)
+	GetProfile(
+		ctx context.Context,
+		user_id int) (
+		*models.Profile,
+		error,
+	)
+	UpdateProfile(
+		ctx context.Context,
+		profile *models.Profile) (
+		*models.Profile,
+		error,
+	)
+	CreateProfile(
+		ctx context.Context,
+		profile *models.Profile) (
+		*models.Profile,
+		error,
+	)
 	Stop()
 }
 

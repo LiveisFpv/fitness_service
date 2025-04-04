@@ -1,4 +1,4 @@
-package countrygrpc
+package fitnessgrpc
 
 import (
 	"context"

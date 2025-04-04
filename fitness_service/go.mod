@@ -3,11 +3,11 @@ module fitness_service
 go 1.24.0
 
 require (
-	github.com/LiveisFpv/country_v1 v1.0.0
-	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.0
-	github.com/jackc/pgx/v5 v5.7.2
+	github.com/LiveisFPV/fitness_v1 v0.0.0-20250404184735-e734d8d909c2
+	github.com/grpc-ecosystem/go-grpc-middleware/v2 v2.3.1
+	github.com/jackc/pgx/v5 v5.7.4
 	github.com/sirupsen/logrus v1.9.3
-	google.golang.org/grpc v1.70.0
+	google.golang.org/grpc v1.71.1
 )
 
 require (
@@ -19,6 +19,6 @@ require (
 	golang.org/x/sync v0.11.0 // indirect
 	golang.org/x/sys v0.30.0 // indirect
 	golang.org/x/text v0.22.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20241202173237-19429a94021a // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20250115164207-1a7da9e5054f // indirect
 	google.golang.org/protobuf v1.36.5 // indirect
 )
