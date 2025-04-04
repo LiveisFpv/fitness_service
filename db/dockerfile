@@ -1,0 +1,11 @@
+FROM golang:1.24
+
+WORKDIR /migrator
+
+COPY . .
+
+RUN chmod +x /migrator/migrate.sh
+
+RUN go mod download
+
+ENTRYPOINT ["/bin/sh", "-c", "/migrator/migrate.sh"]
