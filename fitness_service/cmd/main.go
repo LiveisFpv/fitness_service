@@ -10,25 +10,19 @@ import (
 	"syscall"
 )
 
-// TODO start microservice
 func main() {
-	//TODO init config obj
 	cfg := config.MustLoad()
 
-	//TODO init logger
 	//if need more opt make create in lib/logger
 	log := logger.LoggerSetup(true)
 
-	//TODO init app
 	ctx := context.Background()
 	app := app.New(ctx, log, cfg.GRPC.Port, cfg.Dsn, cfg.TokenTTL)
 	log.Info("Start service")
-	//TODO start grpc-Server
 	go func() {
 		app.GRPCServer.MustRun()
 	}()
 
-	//TODO graceful shutdown
 	// Graceful shutdown
 	stop := make(chan os.Signal, 1)
 

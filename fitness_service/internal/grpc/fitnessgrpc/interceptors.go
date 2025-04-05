@@ -21,7 +21,6 @@ type App struct {
 	port       int
 }
 
-// TODO create logger
 // App constructor with logger and Service
 func New(log *logrus.Logger, user_Service *fitness.UserService, port int) *App {
 

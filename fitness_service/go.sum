@@ -4,6 +4,8 @@ github.com/LiveisFPV/fitness_v1 v0.1.1 h1:5aAleYxMqCok3Lp3L6gOM7JebkSKX6znJYfqCB
 github.com/LiveisFPV/fitness_v1 v0.1.1/go.mod h1:QV5SYAWosa1Ar/kw7VMea3DZ5pIN/LBHZ/Wb7pY6/qA=
 github.com/LiveisFPV/fitness_v1 v0.2.1 h1:FIufjEdtV2nxkK+yZ+Xq/dOzfQ8yrDv6r7uQrCI3QBw=
 github.com/LiveisFPV/fitness_v1 v0.2.1/go.mod h1:QV5SYAWosa1Ar/kw7VMea3DZ5pIN/LBHZ/Wb7pY6/qA=
+github.com/LiveisFPV/fitness_v1 v0.3.1 h1:T5+HW36bqp5500GQW68m5Br53xFpXyHwGGuprxy3Mzo=
+github.com/LiveisFPV/fitness_v1 v0.3.1/go.mod h1:QV5SYAWosa1Ar/kw7VMea3DZ5pIN/LBHZ/Wb7pY6/qA=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
