@@ -12,7 +12,7 @@ import (
 
 type App struct {
 	GRPCServer *fitnessgrpc.App
-	Storage    storage.Repository
+	Storage    storage.UserModel
 }
 
 // Constructor APP creates gRPCServer, storage

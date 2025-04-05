@@ -16,11 +16,11 @@ type repo struct {
 	pool *pgxpool.Pool
 }
 
-// Repository constructor
-func NewRepository(
+// UserModel constructor
+func NewUserModel(
 	pgxpool *pgxpool.Pool,
 	log *logrus.Logger,
-) Repository {
+) UserModel {
 	return &repo{
 		Queries: postgresql.New(pgxpool),
 		log:     log,
@@ -29,7 +29,7 @@ func NewRepository(
 }
 
 // Func for work with DB
-type Repository interface {
+type UserModel interface {
 	GetUser(
 		ctx context.Context,
 		user_id int) (
@@ -63,7 +63,7 @@ type Repository interface {
 	Stop()
 }
 
-func NewStorage(ctx context.Context, dsn string, log *logrus.Logger) (Repository, error) {
+func NewStorage(ctx context.Context, dsn string, log *logrus.Logger) (UserModel, error) {
 	pool, err := pgxpool.New(ctx, dsn)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
@@ -75,7 +75,7 @@ func NewStorage(ctx context.Context, dsn string, log *logrus.Logger) (Repository
 		return nil, fmt.Errorf("database ping failed: %w", err)
 	}
 
-	return NewRepository(pool, log), nil
+	return NewUserModel(pool, log), nil
 }
 
 func (r *repo) Stop() {

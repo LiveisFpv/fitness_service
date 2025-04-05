@@ -10,7 +10,7 @@ import (
 )
 
 // All methods
-type UserStorage interface {
+type UserController interface {
 	GetUser(
 		ctx context.Context,
 		user_id int,
@@ -46,21 +46,21 @@ type UserStorage interface {
 }
 
 type UserService struct {
-	log         *logrus.Logger
-	userStorage UserStorage
-	tokenTTL    time.Duration
+	log            *logrus.Logger
+	userController UserController
+	tokenTTL       time.Duration
 }
 
 // Constructor service of User
 func New(
 	log *logrus.Logger,
-	userStorage UserStorage,
+	userController UserController,
 	tokenTTL time.Duration,
 ) *UserService {
 	return &UserService{
-		log:         log,
-		userStorage: userStorage,
-		tokenTTL:    tokenTTL,
+		log:            log,
+		userController: userController,
+		tokenTTL:       tokenTTL,
 	}
 }
 func (u *UserService) GetUser(
@@ -77,7 +77,7 @@ func (u *UserService) GetUser(
 		},
 	)
 	log.Info("Start Get by ID User")
-	user, err := u.userStorage.GetUser(ctx, user_id)
+	user, err := u.userController.GetUser(ctx, user_id)
 	if err != nil {
 		u.log.Error(fmt.Sprintf("failed to get user with id %d", user_id), err)
 		return nil, err
