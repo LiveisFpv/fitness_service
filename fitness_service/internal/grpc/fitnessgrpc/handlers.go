@@ -29,8 +29,6 @@ func (s *serverAPI) GetUser(ctx context.Context, req *fitness_v1.ProfileRequest)
 		UserWeight:        user.User_weight,
 		UserFitnessTarget: user.User_fitness_target,
 		UserSex:           user.User_sex,
-		UserHypertain:     user.User_hypertain,
-		UserDiabet:        user.User_diabet,
 		UserLevel:         nil,
 	}
 	if user.User_level != nil {
@@ -54,8 +52,6 @@ func (s *serverAPI) CreateProfile(ctx context.Context, req *fitness_v1.CreatePro
 		User_weight:         req.UserWeight,
 		User_fitness_target: req.UserFitnessTarget,
 		User_sex:            req.UserSex,
-		User_hypertain:      req.UserHypertain,
-		User_diabet:         req.UserDiabet,
 		User_level:          &usrLevel,
 	})
 	if err != nil {
@@ -72,8 +68,6 @@ func (s *serverAPI) CreateProfile(ctx context.Context, req *fitness_v1.CreatePro
 		UserWeight:        user.User_weight,
 		UserFitnessTarget: user.User_fitness_target,
 		UserSex:           user.User_sex,
-		UserHypertain:     user.User_hypertain,
-		UserDiabet:        user.User_diabet,
 		UserLevel:         &userLevel2,
 	}, nil
 }
@@ -92,8 +86,6 @@ func (s *serverAPI) UpdateProfile(ctx context.Context, req *fitness_v1.UpdatePro
 		req.UserWeight,
 		req.UserFitnessTarget,
 		req.UserSex,
-		req.UserHypertain,
-		req.UserDiabet,
 		&usrLevel,
 	)
 	if err != nil {
@@ -110,8 +102,6 @@ func (s *serverAPI) UpdateProfile(ctx context.Context, req *fitness_v1.UpdatePro
 		UserWeight:        user.User_weight,
 		UserFitnessTarget: user.User_fitness_target,
 		UserSex:           user.User_sex,
-		UserHypertain:     user.User_hypertain,
-		UserDiabet:        user.User_diabet,
 		UserLevel:         &userLevel2,
 	}, nil
 }

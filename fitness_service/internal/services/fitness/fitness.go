@@ -36,8 +36,6 @@ type UserController interface {
 		user_weight *float64,
 		user_fitness_target *string,
 		user_sex *bool,
-		user_hypertain *bool,
-		user_diabet *bool,
 		user_level *int,
 	) (
 		*models.User,
@@ -97,8 +95,6 @@ func (u *UserService) UpdateUser(
 	user_weight *float64,
 	user_fitness_target *string,
 	user_sex *bool,
-	user_hypertain *bool,
-	user_diabet *bool,
 	user_level *int,
 ) (
 	*models.User,
@@ -117,8 +113,6 @@ func (u *UserService) UpdateUser(
 			"user_weight":         user_weight,
 			"user_fitness_target": user_fitness_target,
 			"user_sex":            user_sex,
-			"user_hypertain":      user_hypertain,
-			"user_diabet":         user_diabet,
 			"user_level":          user_level,
 		},
 	)
@@ -134,8 +128,6 @@ func (u *UserService) UpdateUser(
 		user_weight,
 		user_fitness_target,
 		user_sex,
-		user_hypertain,
-		user_diabet,
 		user_level,
 	)
 	if err != nil {
@@ -164,8 +156,6 @@ func (u *UserService) CreateUser(
 			"user_weight":         user.User_weight,
 			"user_fitness_target": user.User_fitness_target,
 			"user_sex":            user.User_sex,
-			"user_hypertain":      user.User_hypertain,
-			"user_diabet":         user.User_diabet,
 			"user_level":          user.User_level,
 		},
 	)

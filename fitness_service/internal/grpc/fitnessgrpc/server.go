@@ -40,8 +40,6 @@ type UserRepository interface {
 		user_weight *float64,
 		user_fitness_target *string,
 		user_sex *bool,
-		user_hypertain *bool,
-		user_diabet *bool,
 		user_level *int,
 	) (
 		*models.User,
