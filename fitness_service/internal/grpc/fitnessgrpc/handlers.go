@@ -29,11 +29,7 @@ func (s *serverAPI) GetUser(ctx context.Context, req *fitness_v1.ProfileRequest)
 		UserWeight:        user.User_weight,
 		UserFitnessTarget: user.User_fitness_target,
 		UserSex:           user.User_sex,
-		UserLevel:         nil,
-	}
-	if user.User_level != nil {
-		tempLevel := int32(*user.User_level)
-		resp.UserLevel = &tempLevel
+		UserLevel:         int32(*user.User_level),
 	}
 
 	return resp, nil
@@ -68,7 +64,7 @@ func (s *serverAPI) CreateProfile(ctx context.Context, req *fitness_v1.CreatePro
 		UserWeight:        user.User_weight,
 		UserFitnessTarget: user.User_fitness_target,
 		UserSex:           user.User_sex,
-		UserLevel:         &userLevel2,
+		UserLevel:         userLevel2,
 	}, nil
 }
 
@@ -92,7 +88,6 @@ func (s *serverAPI) UpdateProfile(ctx context.Context, req *fitness_v1.UpdatePro
 		return nil, status.Error(codes.NotFound, fmt.Sprint(err))
 	}
 
-	userLevel2 := int32(*user.User_level)
 	return &fitness_v1.ProfileResponse{
 		UserFirstname:     user.User_firstName,
 		UserLastname:      user.User_lastName,
@@ -102,6 +97,6 @@ func (s *serverAPI) UpdateProfile(ctx context.Context, req *fitness_v1.UpdatePro
 		UserWeight:        user.User_weight,
 		UserFitnessTarget: user.User_fitness_target,
 		UserSex:           user.User_sex,
-		UserLevel:         &userLevel2,
+		UserLevel:         int32(*user.User_level),
 	}, nil
 }
