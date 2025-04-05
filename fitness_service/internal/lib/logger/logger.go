@@ -71,7 +71,7 @@ func LoggerSetup(debug bool) *logrus.Logger {
 		logger.SetLevel(logrus.InfoLevel)
 	}
 
-	hook := NewAsyncLogstashHook("logstash:5050")
+	hook := NewAsyncLogstashHook("logstash:5056")
 	logger.AddHook(hook)
 
 	return logger
