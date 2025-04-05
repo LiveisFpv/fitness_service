@@ -14,8 +14,6 @@ CREATE TABLE IF NOT EXISTS users
     user_weight double precision NOT NULL,
     user_fitness_target text NOT NULL,
     user_sex boolean NOT NULL,
-    user_hypertain boolean NOT NULL,
-    user_diabet boolean NOT NULL,
     user_level smallint,
     PRIMARY KEY (user_id)
 );
