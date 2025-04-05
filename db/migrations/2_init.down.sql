@@ -11,21 +11,6 @@ DROP TABLE IF EXISTS diet_plan;
 DROP TABLE IF EXISTS train_plan;
 DROP TABLE IF EXISTS weight_hist;
 
-CREATE TABLE IF NOT EXISTS users
-(
-    user_id bigint NOT NULL,
-    user_firstName text NOT NULL,
-    user_lastName text NOT NULL,
-    user_middleName text NOT NULL,
-    user_birthday DATE NOT NULL,
-    user_height integer NOT NULL,
-    user_weight double precision NOT NULL,
-    user_fitness_target text NOT NULL,
-    user_sex boolean NOT NULL,
-    user_level smallint,
-    PRIMARY KEY (user_id)
-);
-
 CREATE TABLE IF NOT EXISTS fitness
 (
     user_id bigint NOT NULL,

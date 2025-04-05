@@ -4,6 +4,7 @@ import (
 	"context"
 	"fitness_service/internal/domain/models"
 	"fmt"
+	"time"
 )
 
 // GetUser implements Repository
@@ -17,18 +18,20 @@ func (r *Queries) GetUser(
 	sqlStatement := `SELECT * FROM users WHERE user_id=$1`
 
 	user := &models.User{}
+	var time_temp time.Time
 	err := r.pool.QueryRow(ctx, sqlStatement, user_id).Scan(
 		&user.User_id,
 		&user.User_firstName,
 		&user.User_lastName,
 		&user.User_middleName,
-		&user.User_birthday,
+		&time_temp,
 		&user.User_height,
 		&user.User_weight,
 		&user.User_fitness_target,
 		&user.User_sex,
 		&user.User_level,
 	)
+	user.User_birthday = time_temp.String()
 
 	if err != nil {
 		return nil, fmt.Errorf("Couldn`t find user: %w", err)
@@ -121,10 +124,11 @@ func (r *Queries) CreateUser(
 	*models.User,
 	error,
 ) {
-	sqlStatement := `INSERT INTO users (user_firstName, user_lastName, user_middleName, user_birthday, user_height, user_weight, user_fitness_target, user_sex, user_level) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING user_id`
+	sqlStatement := `INSERT INTO users (user_id, user_firstName, user_lastName, user_middleName, user_birthday, user_height, user_weight, user_fitness_target, user_sex, user_level) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10) RETURNING user_id`
 
 	user_id := 0
 	err := r.pool.QueryRow(ctx, sqlStatement,
+		user.User_id,
 		user.User_firstName,
 		user.User_lastName,
 		user.User_middleName,
