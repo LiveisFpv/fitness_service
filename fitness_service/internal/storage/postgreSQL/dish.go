@@ -25,7 +25,7 @@ func (r *Queries) AddDietPlan(ctx context.Context, diet_plan *models.DietPlan) (
 func (r *Queries) UpdateDietPlan(ctx context.Context, diet_plan *models.DietPlan) (*models.DietPlan, error) {
 	return nil, fmt.Errorf("not implemented")
 }
-func (r *Queries) DeleteDietPlan(ctx context.Context, diet_plan *models.DietPlan) (*models.DietPlan, error) {
+func (r *Queries) DeleteDietPlan(ctx context.Context, dish_id, user_id int) (*models.DietPlan, error) {
 	return nil, fmt.Errorf("not implemented")
 }
 func (r *Queries) GetRecipesList(ctx context.Context, dish_id int) ([]*models.Recipe, error) {
