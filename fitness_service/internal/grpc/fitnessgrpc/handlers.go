@@ -35,7 +35,7 @@ func (s *serverAPI) GetUser(ctx context.Context, req *fitness_v1.ProfileRequest)
 	return resp, nil
 }
 
-func (s *serverAPI) CreateProfile(ctx context.Context, req *fitness_v1.CreateProfileRequest) (*fitness_v1.ProfileResponse, error) {
+func (s *serverAPI) CreateUser(ctx context.Context, req *fitness_v1.CreateProfileRequest) (*fitness_v1.ProfileResponse, error) {
 
 	usrLevel := int(*req.UserLevel)
 	user, err := s.user.CreateUser(ctx, &models.User{
@@ -68,7 +68,7 @@ func (s *serverAPI) CreateProfile(ctx context.Context, req *fitness_v1.CreatePro
 	}, nil
 }
 
-func (s *serverAPI) UpdateProfile(ctx context.Context, req *fitness_v1.UpdateProfileRequest) (*fitness_v1.ProfileResponse, error) {
+func (s *serverAPI) UpdateUser(ctx context.Context, req *fitness_v1.UpdateProfileRequest) (*fitness_v1.ProfileResponse, error) {
 	usrLevel := int(*req.UserLevel)
 	usrHeight := int(*req.UserHeight)
 	user, err := s.user.UpdateUser(
