@@ -86,7 +86,6 @@ func (u *UserService) GetUser(
 	return user, nil
 }
 
-// TODO methods
 func (u *UserService) UpdateUser(
 	ctx context.Context,
 	user_id int,
@@ -105,8 +104,46 @@ func (u *UserService) UpdateUser(
 	*models.User,
 	error,
 ) {
+	const op = "UserService.UpdateUser"
+	log := u.log.WithFields(
+		logrus.Fields{
+			"op":                  op,
+			"user_id":             user_id,
+			"user_firstName":      user_firstName,
+			"user_lastName":       user_lastName,
+			"user_middleName":     user_middleName,
+			"user_birthday":       user_birthday,
+			"user_height":         user_height,
+			"user_weight":         user_weight,
+			"user_fitness_target": user_fitness_target,
+			"user_sex":            user_sex,
+			"user_hypertain":      user_hypertain,
+			"user_diabet":         user_diabet,
+			"user_level":          user_level,
+		},
+	)
+	log.Info("Start Update User")
+	user, err := u.userController.UpdateUser(
+		ctx,
+		user_id,
+		user_firstName,
+		user_lastName,
+		user_middleName,
+		user_birthday,
+		user_height,
+		user_weight,
+		user_fitness_target,
+		user_sex,
+		user_hypertain,
+		user_diabet,
+		user_level,
+	)
+	if err != nil {
+		u.log.Error(fmt.Sprintf("failed to update user with id %d", user_id), err)
+		return nil, err
+	}
 
-	return &models.User{}, nil
+	return user, nil
 }
 func (u *UserService) CreateUser(
 	ctx context.Context,
@@ -114,5 +151,33 @@ func (u *UserService) CreateUser(
 	*models.User,
 	error,
 ) {
-	return &models.User{}, nil
+	const op = "UserService.CreateUser"
+	log := u.log.WithFields(
+		logrus.Fields{
+			"op":                  op,
+			"user_id":             user.User_id,
+			"user_firstName":      user.User_firstName,
+			"user_lastName":       user.User_lastName,
+			"user_middleName":     user.User_middleName,
+			"user_birthday":       user.User_birthday,
+			"user_height":         user.User_height,
+			"user_weight":         user.User_weight,
+			"user_fitness_target": user.User_fitness_target,
+			"user_sex":            user.User_sex,
+			"user_hypertain":      user.User_hypertain,
+			"user_diabet":         user.User_diabet,
+			"user_level":          user.User_level,
+		},
+	)
+	log.Info("Start Create User")
+	resp_user, err := u.userController.CreateUser(
+		ctx,
+		user,
+	)
+	if err != nil {
+		u.log.Error(fmt.Sprintf("failed to create user"), err)
+		return nil, err
+	}
+
+	return resp_user, nil
 }
