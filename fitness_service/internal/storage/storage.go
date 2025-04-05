@@ -38,7 +38,19 @@ type Repository interface {
 	)
 	UpdateUser(
 		ctx context.Context,
-		user *models.User) (
+		user_id int,
+		user_firstName *string,
+		user_lastName *string,
+		user_middleName *string,
+		user_birthday *string,
+		user_height *int,
+		user_weight *float64,
+		user_fitness_target *string,
+		user_sex *bool,
+		user_hypertain *bool,
+		user_diabet *bool,
+		user_level *int,
+	) (
 		*models.User,
 		error,
 	)

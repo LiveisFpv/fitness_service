@@ -3,6 +3,7 @@ package fitness
 import (
 	"context"
 	"fitness_service/internal/domain/models"
+	"fmt"
 	"time"
 
 	"github.com/sirupsen/logrus"
@@ -26,6 +27,10 @@ type UserStorage interface {
 	)
 	UpdateUser(
 		ctx context.Context,
+		user_id int,
+		user_firstName *string,
+		user_lastName *string,
+		user_middleName *string,
 		user_birthday *string,
 		user_height *int,
 		user_weight *float64,
@@ -35,8 +40,8 @@ type UserStorage interface {
 		user_diabet *bool,
 		user_level *int,
 	) (
-		profile *models.User,
-		err error,
+		*models.User,
+		error,
 	)
 }
 
@@ -64,14 +69,43 @@ func (u *UserService) GetUser(
 	*models.User,
 	error,
 ) {
-	return &models.User{}, nil
+	const op = "UserService.GetUser"
+	log := u.log.WithFields(
+		logrus.Fields{
+			"op": op,
+			"id": user_id,
+		},
+	)
+	log.Info("Start Get by ID User")
+	user, err := u.userStorage.GetUser(ctx, user_id)
+	if err != nil {
+		u.log.Error(fmt.Sprintf("failed to get user with id %d", user_id), err)
+		return nil, err
+	}
+
+	return user, nil
 }
+
+// TODO methods
 func (u *UserService) UpdateUser(
 	ctx context.Context,
-	user *models.User) (
+	user_id int,
+	user_firstName *string,
+	user_lastName *string,
+	user_middleName *string,
+	user_birthday *string,
+	user_height *int,
+	user_weight *float64,
+	user_fitness_target *string,
+	user_sex *bool,
+	user_hypertain *bool,
+	user_diabet *bool,
+	user_level *int,
+) (
 	*models.User,
 	error,
 ) {
+
 	return &models.User{}, nil
 }
 func (u *UserService) CreateUser(
@@ -81,102 +115,4 @@ func (u *UserService) CreateUser(
 	error,
 ) {
 	return &models.User{}, nil
-}
-
-// TODO methods
-func (c *CountryService) Add_Country(ctx context.Context, country_title, country_capital, country_area string) (country *models.Country, err error) {
-	const op = "Country.Create"
-	log := c.log.WithFields(
-		logrus.Fields{
-			"op":      op,
-			"title":   country_title,
-			"capital": country_capital,
-			"area":    country_area,
-		},
-	)
-	log.Info("Start Create Country")
-
-	country, err = c.countryStorage.CreateCountry(ctx, country_title, country_capital, country_area)
-	if err != nil {
-		c.log.Error("failed to create country", err)
-		return nil, err
-	}
-
-	return country, nil
-}
-
-// Delete_CountrybyID implements countrygrpc.Country.
-func (c *CountryService) Delete_CountrybyID(ctx context.Context, country_id int) (*models.Country, error) {
-	const op = "Country.Delete"
-	log := c.log.WithFields(
-		logrus.Fields{
-			"op": op,
-			"id": country_id,
-		},
-	)
-	log.Info("Start Delete Country")
-	res, err := c.countryStorage.DeleteCountrybyID(ctx, country_id)
-	if err != nil {
-		c.log.Error("failed to delete country", err)
-		return nil, err
-	}
-	return res, nil
-}
-
-// Get_All_Country implements countrygrpc.Country.
-func (c *CountryService) Get_All_Country(ctx context.Context, pagination *models.Pagination, filter []*models.Filter, orderby []*models.Sort) ([]*models.Country, *models.Pagination, error) {
-	const op = "Country.GetAll"
-	log := c.log.WithFields(
-		logrus.Fields{
-			"op": op,
-		},
-	)
-	log.Info("Start Get ALL Country")
-
-	countries, new_pagination, err := c.countryStorage.GetAllCountry(ctx, pagination, filter, orderby)
-	if err != nil {
-		c.log.Error("failed to get all countries", err)
-		return nil, nil, err
-	}
-
-	return countries, new_pagination, nil
-}
-
-// Get_CountrybyID implements countrygrpc.Country.
-func (c *CountryService) Get_CountrybyID(ctx context.Context, country_id int) (country *models.Country, err error) {
-	const op = "Country.GetbyID"
-	log := c.log.WithFields(
-		logrus.Fields{
-			"op": op,
-			"id": country_id,
-		},
-	)
-	log.Info("Start Get by ID Country")
-	country, err = c.countryStorage.GetCountrybyID(ctx, country_id)
-	if err != nil {
-		c.log.Error("failed to get country by id", err)
-		return nil, err
-	}
-	return country, nil
-}
-
-// Update_CountrybyID implements countrygrpc.Country.
-func (c *CountryService) Update_CountrybyID(ctx context.Context, country *models.Country) (err error) {
-	const op = "Country.Update"
-	log := c.log.WithFields(
-		logrus.Fields{
-			"op":      op,
-			"id":      country.Country_id,
-			"title":   country.Country_title,
-			"capital": country.Country_capital,
-			"area":    country.Country_area,
-		},
-	)
-	log.Info("Start Update country")
-	err = c.countryStorage.UpdateCountrybyID(ctx, country)
-	if err != nil {
-		c.log.Error("failed to update country", err)
-		return err
-	}
-	return nil
 }

@@ -2,6 +2,7 @@ package fitnessgrpc
 
 import (
 	"context"
+	"fitness_service/internal/services/fitness"
 	"fmt"
 	"log/slog"
 	"net"
@@ -22,7 +23,7 @@ type App struct {
 
 // TODO create logger
 // App constructor with logger and Service
-func New(log *logrus.Logger, user_Service UserService, port int) *App {
+func New(log *logrus.Logger, user_Service *fitness.UserService, port int) *App {
 
 	recoverOpts := []recovery.Option{
 		recovery.WithRecoveryHandler(
