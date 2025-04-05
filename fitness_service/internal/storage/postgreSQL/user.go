@@ -34,7 +34,7 @@ func (r *Queries) GetUser(
 	user.User_birthday = time_temp.String()
 
 	if err != nil {
-		return nil, fmt.Errorf("Couldn`t find user: %w", err)
+		return nil, fmt.Errorf("couldn`t find user: %w", err)
 	}
 
 	return user, nil

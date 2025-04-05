@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS recipes
     recipe_instruct text NOT NULL,
     recipe_img text
 );
-
+-- TODO CASCADE REMOVE
 ALTER TABLE IF EXISTS recipes
     ADD FOREIGN KEY(dish_id)
     REFERENCES dishes(dish_id) MATCH SIMPLE
@@ -50,7 +50,7 @@ create table if not exists training_instr
     training_instr text not null,
     training_img text
 );
-
+-- TODO CASCADE REMOVE
 ALTER TABLE IF EXISTS training_instr
     ADD FOREIGN KEY(training_id)
     REFERENCES training(training_id) MATCH SIMPLE
@@ -66,12 +66,14 @@ create table if not exists diet_plan
     date text NOT NULL
 );
 
+-- TODO CASCADE DELETE
 ALTER TABLE IF EXISTS diet_plan
     ADD FOREIGN KEY(dish_id)
     REFERENCES dishes(dish_id) MATCH SIMPLE
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
+-- TODO CASCADE DELETE
 
 ALTER TABLE IF EXISTS diet_plan
     ADD FOREIGN KEY(user_id)
@@ -86,6 +88,7 @@ create table if not exists train_plan
     user_id bigint not null,
     date text NOT NULL
 );
+-- TODO CASCADE DELETE
 
 ALTER TABLE IF EXISTS train_plan
     ADD FOREIGN KEY(training_id)
@@ -93,6 +96,7 @@ ALTER TABLE IF EXISTS train_plan
     ON UPDATE NO ACTION
     ON DELETE NO ACTION
     NOT VALID;
+-- TODO CASCADE DELETE
 
 ALTER TABLE IF EXISTS train_plan
     ADD FOREIGN KEY(user_id)
@@ -107,6 +111,7 @@ create table if not exists weight_hist
     weight float not null check (weight > 0),
     date text not null
 );
+-- TODO CASCADE DELETE
 
 ALTER TABLE IF EXISTS weight_hist
     ADD FOREIGN KEY(user_id)

@@ -5,6 +5,7 @@ import (
 	"fitness_service/internal/domain/models"
 	postgresql "fitness_service/internal/storage/postgreSQL"
 	"fmt"
+	"time"
 
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/sirupsen/logrus"
@@ -16,11 +17,11 @@ type repo struct {
 	pool *pgxpool.Pool
 }
 
-// UserModel constructor
-func NewUserModel(
+// Repository constructor
+func NewRepository(
 	pgxpool *pgxpool.Pool,
 	log *logrus.Logger,
-) UserModel {
+) Repository {
 	return &repo{
 		Queries: postgresql.New(pgxpool),
 		log:     log,
@@ -29,7 +30,7 @@ func NewUserModel(
 }
 
 // Func for work with DB
-type UserModel interface {
+type Repository interface {
 	GetUser(
 		ctx context.Context,
 		user_id int) (
@@ -58,10 +59,54 @@ type UserModel interface {
 		*models.User,
 		error,
 	)
+
+	// TODO
+	// Планы тренировки и диеты
+	GetPlan(ctx context.Context, user_id int, date time.Time) (*models.Plan, error)
+	GetDayPlan(ctx context.Context, user_id int, date time.Time) (*models.DayPlan, error)
+
+	GetTrainingById(ctx context.Context, training_id int) (*models.Training, error)
+	AddTraining(ctx context.Context, training *models.Training) (*models.Training, error)
+	UpdateTraining(ctx context.Context, training *models.Training) (*models.Training, error)
+	DeleteTraining(ctx context.Context, training_id int) (*models.Training, error)
+
+	AddTrainingPlan(ctx context.Context, training_plan *models.TrainingPlan) (*models.TrainingPlan, error)
+	UpdateTrainingPlan(ctx context.Context, training_plan *models.TrainingPlan) (*models.TrainingPlan, error)
+	DeleteTrainingPlan(ctx context.Context, training_plan *models.TrainingPlan) (*models.TrainingPlan, error)
+
+	GetDishById(ctx context.Context, dish_id int) (*models.Dish, error)
+	AddDish(ctx context.Context, dish *models.Dish) (*models.Dish, error)
+	UpdateDish(ctx context.Context, dish *models.Dish) (*models.Dish, error)
+	DeleteDish(ctx context.Context, dish_id int) (*models.Dish, error)
+
+	AddDietPlan(ctx context.Context, diet_plan *models.DietPlan) (*models.DietPlan, error)
+	UpdateDietPlan(ctx context.Context, diet_plan *models.DietPlan) (*models.DietPlan, error)
+	DeleteDietPlan(ctx context.Context, diet_plan *models.DietPlan) (*models.DietPlan, error)
+
+	// Список рецептов для блюда
+	// Per dish_id
+	GetRecipesList(ctx context.Context, dish_id int) ([]*models.Recipe, error)
+	AddRecipe(ctx context.Context, recipe *models.Recipe) (*models.Recipe, error)
+	UpdateRecipe(ctx context.Context, recipe *models.Recipe) (*models.Recipe, error)
+	DeleteRecipe(ctx context.Context, recipe_id int) (*models.Recipe, error)
+
+	// Список упражнений для тренировки
+	// Per Training
+	GetTrainingInsrtuctionsList(ctx context.Context, training_id int) ([]*models.TrainingInstructions, error)
+	AddTrainingInstruction(ctx context.Context, training *models.Training) (*models.Training, error)
+	UpdateTrainingInstruction(ctx context.Context, training *models.Training) (*models.Training, error)
+	DeleteTrainingInstruction(ctx context.Context, training_id int) (*models.Training, error)
+
+	// История весов
+	GetWeightHistoryList(ctx context.Context) ([]*models.WeightHistory, error)
+	AddWeightHistory(ctx context.Context, weight *models.WeightHistory) (*models.WeightHistory, error)
+	UpdateWeightHistory(ctx context.Context, weight *models.WeightHistory) (*models.WeightHistory, error)
+	DeleteWightHistory(ctx context.Context, user_id int, date time.Time) (*models.WeightHistory, error)
+
 	Stop()
 }
 
-func NewStorage(ctx context.Context, dsn string, log *logrus.Logger) (UserModel, error) {
+func NewStorage(ctx context.Context, dsn string, log *logrus.Logger) (Repository, error) {
 	pool, err := pgxpool.New(ctx, dsn)
 	if err != nil {
 		return nil, fmt.Errorf("failed to connect to database: %w", err)
@@ -73,7 +118,7 @@ func NewStorage(ctx context.Context, dsn string, log *logrus.Logger) (UserModel,
 		return nil, fmt.Errorf("database ping failed: %w", err)
 	}
 
-	return NewUserModel(pool, log), nil
+	return NewRepository(pool, log), nil
 }
 
 func (r *repo) Stop() {
