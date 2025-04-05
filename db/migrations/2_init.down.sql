@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS fitness_share
     share_code UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
     fitness_date_from date,
-    fitness_date_to date,
+    fitness_date_to date
 );
 
 CREATE TABLE IF NOT EXISTS dishes
