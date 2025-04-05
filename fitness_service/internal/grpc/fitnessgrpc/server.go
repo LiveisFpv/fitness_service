@@ -45,8 +45,6 @@ type UserRepository interface {
 	)
 }
 
-
-
 // It how constructor but not constructor:В
 func Register(gRPCServer *grpc.Server, user UserRepository) {
 	fitness_v1.RegisterFitnessServer(gRPCServer, &serverAPI{user: user})

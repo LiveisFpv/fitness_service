@@ -11,15 +11,15 @@ import (
 // GetUser implements Repository
 func (r *Queries) GetUser(
 	ctx context.Context,
-	user_id int
-	) (
+	user_id int,
+) (
 	*models.User,
 	error,
 ) {
-	sqlStatement := `SELECT * FROM country WHERE user_id=$1`
-	
-	user = &models.User{}
-	err = r.pool.QueryRow(ctx, sqlStatement, country_id).Scan(
+	sqlStatement := `SELECT * FROM users WHERE user_id=$1`
+
+	user := &models.User{}
+	err := r.pool.QueryRow(ctx, sqlStatement, user_id).Scan(
 		&user.User_id,
 		&user.User_firstName,
 		&user.User_lastName,
@@ -44,16 +44,16 @@ func (r *Queries) GetUser(
 // UpdateUser implements Repository
 func (r *Queries) UpdateUser(
 	ctx context.Context,
-	user *models.User
-	) (
+	user *models.User,
+) (
 	*models.User,
 	error,
 ) {
 	sqlStatement := `UPDATE users SET user_firstName=$2, user_lastName=$3, user_middleName=$4, user_birthday=$5, user_height=$6, user_weight=$7, user_fitness_target=$8, user_sex=$9, user_hypertain=$10, user_diabet=$11, user_level=$12 WHERE user_id=$1`
 
-	_, err = r.pool.Exec(
-		ctx, 
-		sqlStatement, 
+	_, err := r.pool.Exec(
+		ctx,
+		sqlStatement,
 		user.User_id,
 		user.User_firstName,
 		user.User_lastName,
@@ -68,10 +68,13 @@ func (r *Queries) UpdateUser(
 		user.User_level,
 	)
 	if err != nil {
-		return fmt.Errorf("can`t update country: %w", err)
+		return nil, fmt.Errorf("can`t update user profile: %w", err)
 	}
-
-	return nil
+	user, err = r.GetUser(ctx, user.User_id)
+	if err != nil {
+		return nil, fmt.Errorf("can`t find user: %w", err)
+	}
+	return user, nil
 }
 
 // CreateUser implements Repository
@@ -82,9 +85,9 @@ func (r *Queries) CreateUser(
 	error,
 ) {
 	sqlStatement := `INSERT INTO users (user_firstName, user_lastName, user_middleName, user_birthday, user_height, user_weight, user_fitness_target, user_sex, user_hypertain, user_diabet, user_level) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11) RETURNING user_id`
-	
+
 	user_id := 0
-	err := r.pool.QueryRow(ctx, sqlStatement, 
+	err := r.pool.QueryRow(ctx, sqlStatement,
 		user.User_firstName,
 		user.User_lastName,
 		user.User_middleName,
@@ -95,81 +98,17 @@ func (r *Queries) CreateUser(
 		user.User_sex,
 		user.User_hypertain,
 		user.User_diabet,
-		user.User_level,	
+		user.User_level,
 	).Scan(&user_id)
-	
+
 	if err != nil {
-		return nil, fmt.Errorf("can`t create user: %w", err)
+		return nil, fmt.Errorf("can`t create user with profile: %w", err)
 	}
-	
-	user, err := r.GetUser(ctx, user_id)
+
+	user, err = r.GetUser(ctx, user_id)
 	if err != nil {
 		return nil, fmt.Errorf("can`t find user: %w", err)
 	}
-	
+
 	return user, nil
-}
-
-
-// DeleteCountrybyID implements Repository.
-func (r *Queries) DeleteCountrybyID(ctx context.Context, country_id int) (country *models.Country, err error) {
-	sqlStatement := `DELETE FROM country WHERE country_id=$1 RETURNING country_title, country_capital, country_area`
-
-	country = &models.Country{}
-	err = r.pool.QueryRow(ctx, sqlStatement, country_id).Scan(country.Country_title, country.Country_capital, country.Country_area)
-	if err != nil {
-		return nil, fmt.Errorf("can`t delete country: %w", err)
-	}
-
-	return country, err
-}
-
-// GetAllCountry implements Repository.
-func (r *Queries) GetAllCountry(ctx context.Context, pagination *models.Pagination, filter []*models.Filter, orderby []*models.Sort) ([]*models.Country, *models.Pagination, error) {
-
-	// Базовый запрос с фильтрацией
-	sqlStatement := `FROM country WHERE 1=1`
-	sqlStatement = unpackFilter(ctx, sqlStatement, filter)
-
-	// Считаем количество запросов
-	err := r.pool.QueryRow(ctx, "SELECT COUNT(*) "+sqlStatement).Scan(&pagination.Total)
-	if err != nil {
-		return nil, nil, fmt.Errorf("can`t query country list: %w", err)
-	}
-	// Проверяем условие, что мы можем удовлетворить хотя бы один запрос
-	offset := pagination.Limit * pagination.Current
-	if offset >= pagination.Total {
-		// Нельзя просто взять и скипнуть БД
-		return nil, pagination, fmt.Errorf("requsted offset %d for %d records", offset, pagination.Total)
-	}
-
-	// Для микрооптимизации БД сортировать потом будем
-	sqlStatement = unpackOrder(ctx, sqlStatement, orderby)
-	sqlStatement = "SELECT * " + sqlStatement + fmt.Sprintf(" LIMIT %d OFFSET %d", pagination.Limit, offset)
-	rows, err := r.pool.Query(ctx, sqlStatement)
-
-	if err != nil {
-		return nil, pagination, err
-	}
-
-	countries := []*models.Country{}
-	for rows.Next() {
-		country := &models.Country{}
-		err := rows.Scan(
-			&country.Country_id,
-			&country.Country_title,
-			&country.Country_capital,
-			&country.Country_area,
-		)
-		if err != nil {
-			return nil, pagination, fmt.Errorf("can`t process query result: %w", err)
-		}
-		countries = append(countries, country)
-	}
-
-	if err = rows.Err(); err != nil {
-		return nil, nil, err
-	}
-
-	return countries, pagination, nil
 }

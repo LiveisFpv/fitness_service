@@ -10,27 +10,37 @@ import (
 
 // All methods
 type UserStorage interface {
-	GetProfile(
+	GetUser(
 		ctx context.Context,
-		user_id int) (
-		*models.Profile,
+		user_id int,
+	) (
+		*models.User,
 		error,
 	)
-	UpdateProfile(
+	CreateUser(
 		ctx context.Context,
-		profile *models.Profile) (
-		*models.Profile,
+		profile *models.User,
+	) (
+		*models.User,
 		error,
 	)
-	CreateProfile(
+	UpdateUser(
 		ctx context.Context,
-		profile *models.Profile) (
-		*models.Profile,
-		error,
+		user_birthday *string,
+		user_height *int,
+		user_weight *float64,
+		user_fitness_target *string,
+		user_sex *bool,
+		user_hypertain *bool,
+		user_diabet *bool,
+		user_level *int,
+	) (
+		profile *models.User,
+		err error,
 	)
 }
 
-type CountryService struct {
+type UserService struct {
 	log         *logrus.Logger
 	userStorage UserStorage
 	tokenTTL    time.Duration
@@ -41,12 +51,36 @@ func New(
 	log *logrus.Logger,
 	userStorage UserStorage,
 	tokenTTL time.Duration,
-) *CountryService {
-	return &CountryService{
+) *UserService {
+	return &UserService{
 		log:         log,
 		userStorage: userStorage,
 		tokenTTL:    tokenTTL,
 	}
+}
+func (u *UserService) GetUser(
+	ctx context.Context,
+	user_id int) (
+	*models.User,
+	error,
+) {
+	return &models.User{}, nil
+}
+func (u *UserService) UpdateUser(
+	ctx context.Context,
+	user *models.User) (
+	*models.User,
+	error,
+) {
+	return &models.User{}, nil
+}
+func (u *UserService) CreateUser(
+	ctx context.Context,
+	user *models.User) (
+	*models.User,
+	error,
+) {
+	return &models.User{}, nil
 }
 
 // TODO methods
