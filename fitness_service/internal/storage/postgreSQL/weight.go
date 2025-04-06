@@ -8,8 +8,28 @@ import (
 )
 
 // TODO
-func (r *Queries) GetWeightHistoryList(ctx context.Context) ([]*models.WeightHistory, error) {
-	return nil, fmt.Errorf("not implemented")
+func (r *Queries) GetWeightHistoryList(ctx context.Context, user_id int, date time.Time) ([]*models.WeightHistory, error) {
+	sqlStatement := `SELECT weight, date from weight_hist where user_id=$1 and (TO_DATE(date, 'YYYY-MM-DD) between $2::date and ($2::date + INTERVAL '1 week')) ORDER BY date ASC`
+	rows, err := r.pool.Query(ctx, sqlStatement, user_id, date)
+	if err != nil {
+		return nil, fmt.Errorf("can`t consturct weight history: %w", err)
+	}
+	response := []*models.WeightHistory{}
+	for rows.Next() {
+		resp := &models.WeightHistory{}
+		err := rows.Scan(
+			&resp.Weight,
+			&resp.Date,
+		)
+		if err != nil {
+			return nil, fmt.Errorf("can`t process query result: %w", err)
+		}
+		response = append(response, resp)
+	}
+	if err = rows.Err(); err != nil {
+		return nil, err
+	}
+	return response, nil
 }
 func (r *Queries) AddWeightHistory(ctx context.Context, weight *models.WeightHistory) (*models.WeightHistory, error) {
 	return nil, fmt.Errorf("not implemented")

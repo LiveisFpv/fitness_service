@@ -60,10 +60,9 @@ type Repository interface {
 		error,
 	)
 
-	// TODO
 	// Планы тренировки и диеты
-	GetPlan(ctx context.Context, user_id int, date time.Time) (*models.Plan, error)
-	GetDayPlan(ctx context.Context, user_id int, date time.Time) (*models.DayPlan, error)
+	GetPlanTrain(ctx context.Context, user_id int, date time.Time) ([]*models.TrainingProgramm, error)
+	GetPlanDishes(ctx context.Context, user_id int, date time.Time) ([]*models.DishProgramm, error)
 
 	GetTrainingById(ctx context.Context, training_id int) (*models.Training, error)
 	AddTraining(ctx context.Context, training *models.Training) (*models.Training, error)
@@ -74,20 +73,17 @@ type Repository interface {
 	UpdateTrainingPlan(ctx context.Context, training_plan *models.TrainingPlan) (*models.TrainingPlan, error)
 	DeleteTrainingPlan(ctx context.Context, training_id, user_id int) (*models.TrainingPlan, error)
 
-	// TODO
 	GetDishById(ctx context.Context, dish_id int) (*models.Dish, error)
 	AddDish(ctx context.Context, dish *models.Dish) (*models.Dish, error)
 	UpdateDish(ctx context.Context, dish *models.Dish) (*models.Dish, error)
 	DeleteDish(ctx context.Context, dish_id int) (*models.Dish, error)
 
-	//TODO
 	AddDietPlan(ctx context.Context, diet_plan *models.DietPlan) (*models.DietPlan, error)
 	UpdateDietPlan(ctx context.Context, diet_plan *models.DietPlan) (*models.DietPlan, error)
 	DeleteDietPlan(ctx context.Context, dish_id, user_id int) (*models.DietPlan, error)
 
 	// Список рецептов для блюда
 	// Per dish_id
-	// TODO
 	GetRecipesList(ctx context.Context, dish_id int) ([]*models.Recipe, error)
 	AddRecipe(ctx context.Context, recipe *models.Recipe) (*models.Recipe, error)
 	UpdateRecipe(ctx context.Context, recipe *models.Recipe) (*models.Recipe, error)
@@ -101,8 +97,8 @@ type Repository interface {
 	DeleteTrainingInstruction(ctx context.Context, training_id, training_order int) (*models.TrainingInstructions, error)
 
 	// История весов
+	GetWeightHistoryList(ctx context.Context, user_id int, date time.Time) ([]*models.WeightHistory, error)
 	// TODO
-	GetWeightHistoryList(ctx context.Context) ([]*models.WeightHistory, error)
 	AddWeightHistory(ctx context.Context, weight *models.WeightHistory) (*models.WeightHistory, error)
 	UpdateWeightHistory(ctx context.Context, weight *models.WeightHistory) (*models.WeightHistory, error)
 	DeleteWightHistory(ctx context.Context, user_id int, date time.Time) (*models.WeightHistory, error)
