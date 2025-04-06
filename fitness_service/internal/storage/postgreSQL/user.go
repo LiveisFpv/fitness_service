@@ -249,7 +249,7 @@ func adjustCalories(tdee float64, target string) float64 {
 
 func generateDietPlan(ctx context.Context, tx pgx.Tx, userID int64, dailyCalories float64) error {
 	// Get Monday of next week
-	startDate := time.Now().Truncate(24*time.Hour).AddDate(0, 0, (8-int(time.Now().Weekday()))%7)
+	startDate := time.Now().Truncate(24*time.Hour).AddDate(0, 0, -int(time.Now().Weekday()))
 
 	// Sample meal distribution (breakfast, lunch, snack, dinner)
 	mealDistribution := []struct {
@@ -298,7 +298,7 @@ func generateDietPlan(ctx context.Context, tx pgx.Tx, userID int64, dailyCalorie
 }
 
 func generateTrainingPlan(ctx context.Context, tx pgx.Tx, userID int64, userLevel int) error {
-	startDate := time.Now().Truncate(24*time.Hour).AddDate(0, 0, (8-int(time.Now().Weekday()))%7)
+	startDate := time.Now().Truncate(24*time.Hour).AddDate(0, 0, -int(time.Now().Weekday()))
 
 	// Get 3-5 suitable workouts based on user level
 	var trainingIDs []int64
