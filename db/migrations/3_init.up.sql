@@ -1,5 +1,8 @@
 BEGIN;
 
+INSERT INTO users (user_id, user_firstName,user_lastName,user_middleName,user_birthday,user_height,user_weight,user_fitness_target,user_sex,user_level) 
+VALUES (1, 'Иван', 'Иванович', 'Иванов', '2006-06-06', '172', '89.99', 'Похудеть', true, 1);
+
 INSERT INTO dishes (dish_time, dish_title, dish_kcal, dish_proteins, dish_fats, dish_carbs, dish_desc)
 VALUES
 -- Завтрак (Breakfast)
@@ -260,10 +263,7 @@ VALUES
 (6, 1, '2023-11-10'),  -- Интервальный бег (Level 3)
 
 -- Saturday (Суббота) - Strength
-(7, 1, '2023-11-11'),  -- Кроссфит WOD (Level 4)
-
--- Sunday (Воскресенье) - Rest
-(NULL, 1, '2023-11-12');  -- Rest day (no training)
+(7, 1, '2023-11-11');  -- Кроссфит WOD (Level 4)
 
 INSERT INTO weight_hist (user_id, weight, date)
 VALUES
