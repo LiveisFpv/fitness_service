@@ -117,6 +117,7 @@ VALUES
 (15, 4, 'Заправить оливковым маслом', 'tuna_salad.jpg');
 
 INSERT INTO training (training_title,training_desc,training_user_level) 
+VALUES
 ('Утренняя разминка', 'Базовые упражнения для новичков: наклоны, повороты, легкая растяжка. Идеально для начала дня.', 1),
 ('Ступеньки к здоровью', 'Ходьба по лестнице в комфортном темпе. 5 подходов по 2 минуты с отдыхом 1 минута.', 1),
 
@@ -137,6 +138,7 @@ INSERT INTO training (training_title,training_desc,training_user_level)
 ('Спартанская подготовка', 'Бег 5 км с утяжелителями + 100 подтягиваний + 200 отжиманий + 300 приседаний на время.', 5);
 
 INSERT INTO training_instr (training_id,training_order,training_instr,training_img)
+VALUES
 -- Level 1 Training 1: Утренняя разминка (ID 1)
 (1, 1, 'Встаньте прямо, ноги на ширине плеч. Медленные повороты головы влево-вправо (10 повторений)', 'warmup_head.jpg'),
 (1, 2, 'Круговые движения плечами: 10 вперед, 10 назад', 'shoulder_roll.jpg'),
