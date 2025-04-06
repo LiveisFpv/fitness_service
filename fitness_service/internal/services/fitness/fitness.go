@@ -43,6 +43,7 @@ type UserController interface {
 	)
 	GetPlanTrain(ctx context.Context, user_id int, date time.Time) ([]*models.TrainingProgramm, error)
 	GetPlanDishes(ctx context.Context, user_id int, date time.Time) ([]*models.DishProgramm, error)
+	GetWeightHistoryList(ctx context.Context, user_id int, date time.Time) ([]*models.WeightHistory, error)
 }
 
 type UserService struct {
@@ -188,4 +189,11 @@ func (u *UserService) GetPlanTrain(ctx context.Context, user_id int, date time.T
 	log := u.log.WithFields(logrus.Fields{})
 	log.Info("Start GetPlanTrain")
 	return u.userController.GetPlanTrain(ctx, user_id, date)
+}
+
+func (u *UserService) GetWeightHistoryList(ctx context.Context, user_id int, date time.Time) ([]*models.WeightHistory, error) {
+	const op = "UserService.GetHistory"
+	log := u.log.WithFields(logrus.Fields{})
+	log.Info("Start GetHistory")
+	return u.userController.GetWeightHistoryList(ctx, user_id, date)
 }
