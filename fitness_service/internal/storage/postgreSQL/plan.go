@@ -30,7 +30,7 @@ func (r *Queries) GetPlanDishes(ctx context.Context, user_id int, date time.Time
 		FROM diet_plan p
 		JOIN dishes d ON d.dish_id = p.dish_id
 		WHERE p.user_id = $1 
-		AND p.date BETWEEN $2 AND ($2 + INTERVAL '1 week') 
+		AND p.date BETWEEN $2::timestamp AND ($2::timestamp + INTERVAL '1 week') 
 		ORDER BY p.date ASC
 	`
 
@@ -90,7 +90,7 @@ func (r *Queries) GetPlanTrain(ctx context.Context, user_id int, date time.Time)
 		FROM train_plan p
 		JOIN training t ON t.training_id = p.training_id
 		WHERE p.user_id = $1
-		AND p.date BETWEEN $2 AND ($2 + INTERVAL '1 week') 
+		AND p.date BETWEEN $2::timestamp AND ($2::timestamp + INTERVAL '1 week') 
 		ORDER BY p.date ASC
 	`
 
