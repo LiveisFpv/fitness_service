@@ -183,3 +183,42 @@ func (s *serverAPI) GetHistory(ctx context.Context, req *fitness_v1.GetHistoryRe
 		Data: response,
 	}, nil
 }
+
+func (s *serverAPI) GetRecipe(ctx context.Context, req *fitness_v1.GetRecipeRequest) (*fitness_v1.RecipeResponse, error) {
+	recipe, err := s.user.GetRecipe(ctx, int(req.DishesId))
+	if err != nil {
+		return nil, err
+	}
+
+	var recipeResponses []*fitness_v1.Recipe
+	for _, r := range recipe {
+		recipeResponses = append(recipeResponses, &fitness_v1.Recipe{
+			RecipeOrder:    int64(r.Recipe_order),
+			RecipeInstruct: r.Recipe_instruct,
+			RecipeImg:      r.Recipe_img,
+		})
+	}
+
+	return &fitness_v1.RecipeResponse{
+		Data: recipeResponses,
+	}, nil
+}
+func (s *serverAPI) GetTrainInstr(ctx context.Context, req *fitness_v1.GetTrainInstrRequest) (*fitness_v1.TrainInstrResponse, error) {
+	instr, err := s.user.GetTrainInstr(ctx, int(req.TrainId))
+	if err != nil {
+		return nil, err
+	}
+
+	var trainInstrResponses []*fitness_v1.TrainInstr
+	for _, i := range instr {
+		trainInstrResponses = append(trainInstrResponses, &fitness_v1.TrainInstr{
+			TrainingOrder: int64(i.Training_order),
+			TrainingInstr: i.Training_instr,
+			TrainingImg:   i.Training_img,
+		})
+	}
+
+	return &fitness_v1.TrainInstrResponse{
+		Data: trainInstrResponses,
+	}, nil
+}

@@ -44,6 +44,8 @@ type UserController interface {
 	GetPlanTrain(ctx context.Context, user_id int, date time.Time) ([]*models.TrainingProgramm, error)
 	GetPlanDishes(ctx context.Context, user_id int, date time.Time) ([]*models.DishProgramm, error)
 	GetWeightHistoryList(ctx context.Context, user_id int, date time.Time) ([]*models.WeightHistory, error)
+	GetRecipesList(ctx context.Context, dish_id int) ([]*models.Recipe, error)
+	GetTrainingInsrtuctionsList(ctx context.Context, training_id int) ([]*models.TrainingInstructions, error)
 }
 
 type UserService struct {
@@ -196,4 +198,20 @@ func (u *UserService) GetWeightHistoryList(ctx context.Context, user_id int, dat
 	log := u.log.WithFields(logrus.Fields{})
 	log.Info("Start GetHistory")
 	return u.userController.GetWeightHistoryList(ctx, user_id, date)
+}
+
+// GetRecipe implements fitnessgrpc.UserRepository.
+func (u *UserService) GetRecipe(ctx context.Context, dishes_id int) ([]*models.Recipe, error) {
+	const op = "UserService.GetRecipe"
+	log := u.log.WithFields(logrus.Fields{})
+	log.Info("Start GetRecipe")
+	return u.userController.GetRecipesList(ctx, dishes_id)
+}
+
+// GetTrainInstr implements fitnessgrpc.UserRepository.
+func (u *UserService) GetTrainInstr(ctx context.Context, train_id int) ([]*models.TrainingInstructions, error) {
+	const op = "UserService.TrainInstr"
+	log := u.log.WithFields(logrus.Fields{})
+	log.Info("Start TrainInstr")
+	return u.userController.GetTrainingInsrtuctionsList(ctx, train_id)
 }
