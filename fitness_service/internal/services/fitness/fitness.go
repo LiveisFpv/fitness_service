@@ -41,6 +41,8 @@ type UserController interface {
 		*models.User,
 		error,
 	)
+	GetPlanTrain(ctx context.Context, user_id int, date time.Time) ([]*models.TrainingProgramm, error)
+	GetPlanDishes(ctx context.Context, user_id int, date time.Time) ([]*models.DishProgramm, error)
 }
 
 type UserService struct {
@@ -170,4 +172,20 @@ func (u *UserService) CreateUser(
 	}
 
 	return resp_user, nil
+}
+
+// GetPlanDishes implements fitnessgrpc.UserRepository.
+func (u *UserService) GetPlanDishes(ctx context.Context, user_id int, date time.Time) ([]*models.DishProgramm, error) {
+	const op = "UserService.GetPlanDishes"
+	log := u.log.WithFields(logrus.Fields{})
+	log.Info("Start GetPlanDishes")
+	return u.userController.GetPlanDishes(ctx, user_id, date)
+}
+
+// GetPlanTrain implements fitnessgrpc.UserRepository.
+func (u *UserService) GetPlanTrain(ctx context.Context, user_id int, date time.Time) ([]*models.TrainingProgramm, error) {
+	const op = "UserService.GetPlanTrain"
+	log := u.log.WithFields(logrus.Fields{})
+	log.Info("Start GetPlanTrain")
+	return u.userController.GetPlanTrain(ctx, user_id, date)
 }

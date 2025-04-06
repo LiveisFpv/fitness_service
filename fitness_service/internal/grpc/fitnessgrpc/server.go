@@ -3,6 +3,7 @@ package fitnessgrpc
 import (
 	"context"
 	"fitness_service/internal/domain/models"
+	"time"
 
 	fitness_v1 "github.com/LiveisFPV/fitness_v1/gen/go/fitness"
 	"google.golang.org/grpc"
@@ -43,6 +44,22 @@ type UserRepository interface {
 		user_level *int,
 	) (
 		*models.User,
+		error,
+	)
+	GetPlanDishes(
+		ctx context.Context,
+		user_id int,
+		date time.Time,
+	) (
+		[]*models.DishProgramm,
+		error,
+	)
+	GetPlanTrain(
+		ctx context.Context,
+		user_id int,
+		date time.Time,
+	) (
+		[]*models.TrainingProgramm,
 		error,
 	)
 }

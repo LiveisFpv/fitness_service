@@ -4,6 +4,7 @@ import (
 	"context"
 	"fitness_service/internal/domain/models"
 	"fmt"
+	"time"
 
 	fitness_v1 "github.com/LiveisFPV/fitness_v1/gen/go/fitness"
 	"google.golang.org/grpc/codes"
@@ -98,5 +99,63 @@ func (s *serverAPI) UpdateUser(ctx context.Context, req *fitness_v1.UpdateProfil
 		UserFitnessTarget: user.User_fitness_target,
 		UserSex:           user.User_sex,
 		UserLevel:         int32(*user.User_level),
+	}, nil
+}
+
+func (s *serverAPI) GetPlanDishes(ctx context.Context, req *fitness_v1.GetPlanDishesRequest) (resp *fitness_v1.PlanDishesResponse, err error) {
+	parsedTime, err := time.Parse(time.RFC3339, req.Date)
+	if err != nil {
+		return nil, err
+	}
+	dishProgramm, err := s.user.GetPlanDishes(ctx, int(req.UserId), parsedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	var response []*fitness_v1.PlanDishes
+
+	for _, dish := range dishProgramm {
+		response = append(response, &fitness_v1.PlanDishes{
+			DishesId:     int64(dish.Dish_id),
+			DishesWeight: dish.Dish_weight,
+			DishesTitle:  dish.Dish_title,
+			Time:         dish.Dish_time,
+			Kcal:         dish.Dish_kcal,
+			Fat:          dish.Dish_fats,
+			Protein:      dish.Dish_proteins,
+			Carbs:        dish.Dish_carbs,
+			Description:  dish.Dish_desc,
+			Date:         dish.Date.Format(time.RFC3339),
+		})
+	}
+
+	return &fitness_v1.PlanDishesResponse{
+		Data: response,
+	}, nil
+}
+func (s *serverAPI) GetPlanTrain(ctx context.Context, req *fitness_v1.GetPlanTrainRequest) (resp *fitness_v1.PlanTrainResponse, err error) {
+	parsedTime, err := time.Parse(time.RFC3339, req.Date)
+	if err != nil {
+		return nil, err
+	}
+
+	trainProgramm, err := s.user.GetPlanTrain(ctx, int(req.UserId), parsedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	var response []*fitness_v1.PlanTrain
+	for _, train := range trainProgramm {
+		response = append(response, &fitness_v1.PlanTrain{
+			TrainId:          int64(train.Training_id),
+			TrainTitle:       train.Training_title,
+			TrainDescription: train.Training_desc,
+			UserLevel:        int64(train.Training_user_level),
+			Date:             train.Date.Format(time.RFC3339),
+		})
+	}
+
+	return &fitness_v1.PlanTrainResponse{
+		Data: response,
 	}, nil
 }
