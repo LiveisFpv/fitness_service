@@ -25,7 +25,7 @@ func (r *Queries) GetWeightHistoryList(ctx context.Context, user_id int, date ti
 		if err != nil {
 			return nil, fmt.Errorf("can`t process query result: %w", err)
 		}
-		parsedDate, err := time.Parse("2006-01-02T15:04:05", dateString+"T00:00:00Z")
+		parsedDate, err := time.Parse("2006-01-02T15:04:05", dateString+"T00:00:00")
 		if err != nil {
 			return nil, fmt.Errorf("can't parse date %s: %w", dateString, err)
 		}

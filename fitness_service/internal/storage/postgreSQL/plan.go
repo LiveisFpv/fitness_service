@@ -64,7 +64,7 @@ func (r *Queries) GetPlanDishes(ctx context.Context, user_id int, date time.Time
 		}
 
 		// Преобразуем строку даты в time.Time, если это нужно
-		parsedDate, err := time.Parse("2006-01-02T15:04:05", dateStr+"T00:00:00Z") // Формат ISO 8601
+		parsedDate, err := time.Parse("2006-01-02T15:04:05", dateStr+"T00:00:00") // Формат ISO 8601
 		if err != nil {
 			return nil, fmt.Errorf("can't parse date %s: %w", dateStr, err)
 		}
@@ -119,7 +119,7 @@ func (r *Queries) GetPlanTrain(ctx context.Context, user_id int, date time.Time)
 		}
 
 		// Преобразуем строку даты в time.Time, если это нужно
-		parsedDate, err := time.Parse("2006-01-02T15:04:05", dateStr+"T00:00:00Z") // Формат ISO 8601
+		parsedDate, err := time.Parse("2006-01-02T15:04:05", dateStr+"T00:00:00") // Формат ISO 8601
 		if err != nil {
 			return nil, fmt.Errorf("can't parse date %s: %w", dateStr, err)
 		}
