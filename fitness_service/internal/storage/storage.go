@@ -91,7 +91,7 @@ type Repository interface {
 	GetRecipesList(ctx context.Context, dish_id int) ([]*models.Recipe, error)
 	AddRecipe(ctx context.Context, recipe *models.Recipe) (*models.Recipe, error)
 	UpdateRecipe(ctx context.Context, recipe *models.Recipe) (*models.Recipe, error)
-	DeleteRecipe(ctx context.Context, recipe_id int) (*models.Recipe, error)
+	DeleteRecipe(ctx context.Context, dish_id, recipe_order int) (*models.Recipe, error)
 
 	// Список упражнений для тренировки
 	// Per Training

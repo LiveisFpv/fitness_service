@@ -30,12 +30,12 @@ func (r *Queries) AddTraining(ctx context.Context, training *models.Training) (*
 		return nil, fmt.Errorf("can`t create training: %w", err)
 	}
 
-	training, err = r.GetTrainingById(ctx, training_id)
+	new_training, err := r.GetTrainingById(ctx, training_id)
 	if err != nil {
 		return nil, err
 	}
 
-	return training, nil
+	return new_training, nil
 }
 
 func (r *Queries) UpdateTraining(ctx context.Context, training *models.Training) (*models.Training, error) {
