@@ -62,6 +62,7 @@ type UserRepository interface {
 		[]*models.TrainingProgramm,
 		error,
 	)
+	GetWeightHistoryList(ctx context.Context, user_id int, date time.Time) ([]*models.WeightHistory, error)
 }
 
 // It how constructor but not constructor:В

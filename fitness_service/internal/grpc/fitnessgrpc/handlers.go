@@ -159,3 +159,27 @@ func (s *serverAPI) GetPlanTrain(ctx context.Context, req *fitness_v1.GetPlanTra
 		Data: response,
 	}, nil
 }
+
+func (s *serverAPI) GetHistory(ctx context.Context, req *fitness_v1.GetHistoryRequest) (resp *fitness_v1.HistoryResponse, err error) {
+	parsedTime, err := time.Parse(time.RFC3339, req.Date)
+	if err != nil {
+		return nil, err
+	}
+
+	history, err := s.user.GetWeightHistoryList(ctx, int(req.UserId), parsedTime)
+	if err != nil {
+		return nil, err
+	}
+
+	var response []*fitness_v1.History
+	for _, train := range history {
+		response = append(response, &fitness_v1.History{
+			UserWeight: float64(train.Weight),
+			Date:       train.Date.Format(time.RFC3339),
+		})
+	}
+
+	return &fitness_v1.HistoryResponse{
+		Data: response,
+	}, nil
+}
