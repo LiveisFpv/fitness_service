@@ -22,6 +22,19 @@ type DietPlan struct {
 	Date        time.Time
 }
 
+type DishProgramm struct {
+	Dish_id       int
+	Dish_time     string
+	Dish_title    string
+	Dish_kcal     float64
+	Dish_proteins float64
+	Dish_fats     float64
+	Dish_carbs    float64
+	Dish_desc     string
+	Dish_weight   float64
+	Date          time.Time
+}
+
 // Инструкции к блюду (many to one)
 type Recipe struct {
 	Dish_id         int

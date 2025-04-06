@@ -17,6 +17,14 @@ type TrainingPlan struct {
 	Date        time.Time
 }
 
+type TrainingProgramm struct {
+	Training_id         int
+	Training_title      string
+	Training_desc       string
+	Training_user_level int
+	Date                time.Time
+}
+
 // Инструкции к каждой тренировке (Many to one)
 type TrainingInstructions struct {
 	Training_id    int
