@@ -1,19 +1,24 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
-
         {
-            "name": "Docker Compose Debug",
+            "name": "Docker: Go Remote Debug",
             "type": "go",
             "request": "attach",
             "mode": "remote",
-            "port": 40000,
+            "remotePath": "/app",
+            "port": 40002,
             "host": "localhost",
-            "remotePath": "",
-            "trace": "verbose"
+            // "substitutePath": [
+            //     {
+            //         "from": "C:\\Users\\nason\\Desktop\\Git\\authorization_service",
+            //         "to": "/app"
+            //     }
+            // ],
+            "showLog": true,
+            "trace": "verbose",
+            "logOutput": "debugger",
+            "apiVersion": 2
         }
     ]
 }
